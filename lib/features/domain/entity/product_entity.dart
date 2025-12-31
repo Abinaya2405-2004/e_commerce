@@ -4,6 +4,9 @@ class ProductEntity {
   final double price;
   final String image;
   final String description;
+  final String category;
+  final String thumbnail;
+  final double discountPercentage;
 
   ProductEntity({
     required this.id,
@@ -11,5 +14,9 @@ class ProductEntity {
     required this.price,
     required this.image,
     required this.description,
+    required this.category,
+    required this.thumbnail,
+    required this.discountPercentage,
+
   });
 }

@@ -25,7 +25,8 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
         .map((e) => ProductModel.fromJson(e))
         .toList();
   }
-@override
+
+  @override
   Future<List<ProductModel>> getProducts() async {
     try {
       final Response response = await apiConnection.get(ApiRoute.product);

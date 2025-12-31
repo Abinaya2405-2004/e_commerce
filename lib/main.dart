@@ -12,27 +12,23 @@ import 'features/presentation/bloc/bloc.dart';
 void main() {
   final apiConnection = ApiConnection();
 
-  final productRemoteDataSource =
-  ProductRemoteDataSourceImpl(apiConnection);
+  final productRemoteDataSource = ProductRemoteDataSourceImpl(apiConnection);
 
-  final productRepository =
-  ProductRepositoryImpl(productRemoteDataSource);
+  final productRepository = ProductRepositoryImpl(productRemoteDataSource);
 
-  final getProductsUseCase =
-  GetProductsUseCase(productRepository);
-final searchProductUseCase=SearchProductsUseCase(productRepository);
+  final getProductsUseCase = GetProductsUseCase(productRepository);
+  final searchProductUseCase = SearchProductsUseCase(productRepository);
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider<ProductBloc>(
-          create: (_) => ProductBloc(getProductsUseCase,searchProductUseCase),
+          create: (_) => ProductBloc(getProductsUseCase, searchProductUseCase),
         ),
       ],
-      child:  MyApp(),
+      child: MyApp(),
     ),
   );
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

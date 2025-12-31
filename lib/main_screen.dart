@@ -1,6 +1,7 @@
 import 'package:e_commerce/core/utils/app_colors.dart';
 import 'package:e_commerce/core/utils/app_strings.dart';
 import 'package:e_commerce/core/utils/app_textstyles.dart';
+import 'package:e_commerce/features/presentation/widgets/app_bar_widget.dart';
 import 'package:e_commerce/features/presentation/widgets/drawer_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,7 +37,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void dispose() {
     controller.dispose();
-    _focusNode.dispose();
     super.dispose();
   }
 
@@ -48,17 +48,7 @@ class _MainScreenState extends State<MainScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.card,
       drawer: DrawerWidgets(),
-      appBar: AppBar(
-        actions: [
-          Icon(Icons.shopping_cart,weight: 20,color: AppColors.textDark,)
-        ],
-        backgroundColor: AppColors.card,
-        title: Text(
-         AppStrings.ecommerce,
-          style: AppTextStyles.w600_32,
-        ),
-        centerTitle: true,
-      ),
+      appBar: AppBarWidget(),
       body: Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
@@ -74,37 +64,28 @@ class _MainScreenState extends State<MainScreen> {
               child: TextField(
                 onChanged: (value) {
                   if (value.isNotEmpty) {
-                    context.read<ProductBloc>().add(
-                      SearchProductEvent(value),
-                    );
+                    context.read<ProductBloc>().add(SearchProductEvent(value));
                   }
                 },
                 controller: controller,
                 focusNode: _focusNode,
                 decoration: InputDecoration(
                   hintText: AppStrings.hintText,
-                  hintStyle: TextStyle(
-                    fontSize:15,
-                    color: AppColors.textGrey
-                  ),
+                  hintStyle: TextStyle(fontSize: 15, color: AppColors.textGrey),
 
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide:  BorderSide(color: AppColors.textDark),
+                    borderSide: BorderSide(color: AppColors.textDark),
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
-                    borderSide:  BorderSide(color: AppColors.textDark),
+                    borderSide: BorderSide(color: AppColors.textDark),
                   ),
                   suffixIcon: GestureDetector(
                     onTap: () {
-                      context.read<ProductBloc>().add(
-                        FetchProductsEvent(),
-                      );
+                      context.read<ProductBloc>().add(FetchProductsEvent());
                       controller.clear();
-                      FocusScope.of(
-                        context,
-                      ).unfocus();
+                      FocusScope.of(context).unfocus();
                     },
                     child: showIcon
                         ? Icon(Icons.close, color: Colors.black)
@@ -125,6 +106,8 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
             ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+
             Expanded(child: widget.child),
           ],
         ),

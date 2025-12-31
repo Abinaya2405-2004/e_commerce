@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entity/product_entity.dart';
 import '../../domain/usecase/product_usecase.dart';
 
-import 'event.dart' show FetchProductsEvent, ProductEvent, SearchProductEvent;
+import 'event.dart' show FetchProductsEvent, ProductEvent, SearchProductEvent, FilterByCategoryEvent;
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final GetProductsUseCase getProductsUseCase;
@@ -28,5 +28,13 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       final products = await searchProductsUseCase(event.query);
       emit(ProductLoaded(products));
     });
+    on<FilterByCategoryEvent>((event, emit) {
+      final filteredProducts = allProducts
+          .where((p) => p.category == event.category)
+          .toList();
+
+      emit(ProductLoaded(filteredProducts));
+    });
+
   }
 }

@@ -7,3 +7,7 @@ class SearchProductEvent extends ProductEvent {
   SearchProductEvent(this.query);
 }
 
+class FilterByCategoryEvent extends ProductEvent {
+  final String category;
+  FilterByCategoryEvent(this.category);
+}
